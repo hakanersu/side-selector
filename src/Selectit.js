@@ -7,30 +7,19 @@ export default class Select {
 			labelField: 'label',
 			valueField: 'value'
 		}
+
 		this.el = element
 		this.config = Object.assign({}, defaultOptions, options || {})
 		this.data = options.data || []
 
-		this.selected = []
-		this.selectedBackup = []
-		this.notSelected = this.data
-		this.LeftCount = this.notSelected.length
-		this.RightCount = this.selected.length
+		const variables = ['items', 'shown', 'count']
 
-		this.items = {
-			left: [],
-			right: [],
-		}
-
-		this.shown = {
-			left: [],
-			right: []
-		}
-
-		this.count = {
-			left: [],
-			right: []
-		}
+		variables.forEach(item => {
+			this[item] = {
+				left: [],
+				right: [],
+			}
+		})
 
 		this.searching = {
 			left: null,
@@ -44,29 +33,16 @@ export default class Select {
 
 	create () {
 		this.el.innerHTML = TEMPLATE
-
-		const container = this.el.querySelector('div')
-		container.style.height = `${this.config.height}px`
-
-		const selectAll = this.el.querySelector('span.selectit-selectall')
-		selectAll.addEventListener("click", () => this.selectAll());
-
-		const deselectAll = this.el.querySelector('span.selectit-deselect')
-		deselectAll.addEventListener("click", () => this.deselectAll());
-
-		const searchLeft = this.el.querySelector('.selectit-left .selectit-search input')
-		searchLeft.addEventListener('keyup', (e) => this.searchItems(e, 'left'))
-
-		const searchRight = this.el.querySelector('.selectit-right .selectit-search input')
-		searchRight.addEventListener('keyup', (e) => this.searchItems(e, 'right'))
-
-		const closeLeft = this.el.querySelector('.selectit-left .close')
-		closeLeft.addEventListener('click', () => this.clearSearch('left'))
-
-		const closeRight = this.el.querySelector('.selectit-right .close')
-		closeRight.addEventListener('click', () => this.clearSearch('right'))
-
 		this.elements = (new Elements(this.el)).elements
+
+		this.elements.container.style.height = `${this.config.height}px`
+		this.elements.select.addEventListener("click", () => this.selectAll());
+		this.elements.deselect.addEventListener("click", () => this.deselectAll());
+		this.elements.input.left.addEventListener('keyup', (e) => this.searchItems(e, 'left'))
+		this.elements.input.right.addEventListener('keyup', (e) => this.searchItems(e, 'right'))
+		this.elements.close.left.addEventListener('click', () => this.clearSearch('left'))
+		this.elements.close.right.addEventListener('click', () => this.clearSearch('right'))
+
 		this.render()
 	}
 	clearSearch (side) {

@@ -22,7 +22,7 @@ export const TEMPLATE = `
 	<div class="selectit-right">
 		<div class="selectit-search">
 			<span class="close right">✕</span>
-			<input type="search" class="Search"/>
+			<input type="search" placeholder="Search"/>
 		</div>
 		<div class="selectit-container">
 			<ul class="selectit-list"></ul>

@@ -23,9 +23,14 @@ export default class Elements {
 			input : {
 				left: this.select('.selectit-left .selectit-search input'),
 				right: this.select('.selectit-right .selectit-search input'),
+			},
+			container: this.select('div'),
+			select: this.select('span.selectit-selectall'),
+			deselect: this.select('span.selectit-deselect'),
+			input: {
+				left: this.select('.selectit-left .selectit-search input'),
+				right: this.select('.selectit-right .selectit-search input'),
 			}
-
-
 		}
 	}
 	
