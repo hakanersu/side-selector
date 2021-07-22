@@ -16,6 +16,7 @@ export default class Select {
 		this.notSelected = this.data
 		this.LeftCount = this.notSelected.length
 		this.RightCount = this.selected.length
+
 		this.create()
 	}
 
@@ -38,31 +39,22 @@ export default class Select {
 		searchRight.addEventListener('keyup', (e) => this.searchRight(e))
 
 		const closeLeft = this.el.querySelector('.selectit-left .close')
-		closeLeft.addEventListener('click', () => this.cleanLeftSearch())
+		closeLeft.addEventListener('click', () => this.clearSearch('Left'))
 
 		const closeRight = this.el.querySelector('.selectit-right .close')
-		closeRight.addEventListener('click', () => this.cleanRightSearch())
+		closeRight.addEventListener('click', () => this.clearSearch('Right'))
 
 		this.elements = (new Elements(this.el)).elements
 		this.render()
 	}
+	clearSearch (side) {
+		this[`searching${side}`] = false
+		this[`shown${side}`] = false
 
-	cleanLeftSearch () {
-		this.searchingLeft = false
-		this.shownLeft = false
-		this.elements.input.Left.value = ''
-		this.elements.close.Left.style.visibility = 'hidden'
+		this.elements.input[side].value = ''
+		this.elements.close[side].style.visibility = 'hidden'
 		this.render()
 	}
-
-	cleanRightSearch () {
-		this.searchingRight = false
-		this.shownRight = false
-		this.elements.input.Right.value = ''
-		this.elements.close.Right.style.visibility = 'hidden'
-		this.render()
-	}
-
 	searchLeft (e) {
 		this.searchingLeft = e.target.value
 		if (!this.searchingLeft || this.searchingLeft === '') {
