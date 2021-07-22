@@ -7,121 +7,92 @@ export default class Select {
 			labelField: 'label',
 			valueField: 'value'
 		}
+
 		this.el = element
 		this.config = Object.assign({}, defaultOptions, options || {})
 		this.data = options.data || []
 
-		this.selected = []
-		this.selectedBackup = []
-		this.notSelected = this.data
-		this.LeftCount = this.notSelected.length
-		this.RightCount = this.selected.length
+		const variables = ['items', 'shown', 'count']
+
+		variables.forEach(item => {
+			this[item] = {
+				left: [],
+				right: [],
+			}
+		})
+
+		this.searching = {
+			left: null,
+			right: null,
+		}
+
+		this.items.left = this.data
 
 		this.create()
 	}
 
 	create () {
 		this.el.innerHTML = TEMPLATE
-
-		const container = this.el.querySelector('div')
-		container.style.height = `${this.config.height}px`
-
-		const selectAll = this.el.querySelector('span.selectit-selectall')
-		selectAll.addEventListener("click", () => this.selectAll());
-
-		const deselectAll = this.el.querySelector('span.selectit-deselect')
-		deselectAll.addEventListener("click", () => this.deselectAll());
-
-		const searchLeft = this.el.querySelector('.selectit-left .selectit-search input')
-		searchLeft.addEventListener('keyup', (e) => this.searchLeft(e))
-
-		const searchRight = this.el.querySelector('.selectit-right .selectit-search input')
-		searchRight.addEventListener('keyup', (e) => this.searchRight(e))
-
-		const closeLeft = this.el.querySelector('.selectit-left .close')
-		closeLeft.addEventListener('click', () => this.clearSearch('Left'))
-
-		const closeRight = this.el.querySelector('.selectit-right .close')
-		closeRight.addEventListener('click', () => this.clearSearch('Right'))
-
 		this.elements = (new Elements(this.el)).elements
+
+		this.elements.container.style.height = `${this.config.height}px`
+		this.elements.select.addEventListener("click", () => this.selectAll());
+		this.elements.deselect.addEventListener("click", () => this.deselectAll());
+		this.elements.input.left.addEventListener('keyup', (e) => this.searchItems(e, 'left'))
+		this.elements.input.right.addEventListener('keyup', (e) => this.searchItems(e, 'right'))
+		this.elements.close.left.addEventListener('click', () => this.clearSearch('left'))
+		this.elements.close.right.addEventListener('click', () => this.clearSearch('right'))
+
 		this.render()
 	}
 	clearSearch (side) {
-		this[`searching${side}`] = false
-		this[`shown${side}`] = false
-
+		this.searching[side] = false
+		this.shown[side] = []
 		this.elements.input[side].value = ''
 		this.elements.close[side].style.visibility = 'hidden'
 		this.render()
 	}
-	searchLeft (e) {
-		this.searchingLeft = e.target.value
-		if (!this.searchingLeft || this.searchingLeft === '') {
-			this.searchingLeft = false
-			this.shownLeft = false
-			this.elements.close.Left.style.visibility = 'hidden'
+
+	searchItems (e, side) {
+		this.searching[side] = e.target.value
+		if (this.searching[side] || this.searching[side] === '') {
+			this.shown[side] = []
+			this.elements.close[side].style.visibility = 'hidden'
 		}
 
-		this.shownLeft = this.notSelected.filter(item => {
-			return item[this.config.labelField].toLowerCase().indexOf(this.searchingLeft.toLowerCase()) !== -1
+		this.shown[side] = this.items[side].filter(item => {
+			return item[this.config.labelField].toLowerCase().indexOf(this.searching[side].toLowerCase()) !== -1
 		})
 
-		if (!this.searchingLeft) {
-			this.shownLeft = false
+		if (!this.searching[side]) {
+			this.shown[side] = []
 		} else {
-			this.elements.close.Left.style.visibility = 'visible'
-		}
-		this.render()
-	}
-
-	searchRight (e) {
-		this.searchingRight = e.target.value
-		if (!this.searchingRight || this.searchingRight === '') {
-			this.searchingRight = false
-			this.shownRight = false
-			this.elements.close.Right.style.visibility = 'hidden'
-		}
-
-		this.shownRight = this.selected.filter(item => {
-			return item[this.config.labelField].toLowerCase().indexOf(this.searchingRight.toLowerCase()) !== -1
-		})
-		if (!this.searchingRight) {
-			this.shownRight = false
-		} else {
-			this.elements.close.Right.style.visibility = 'visible'
+			this.elements.close[side].style.visibility = 'visible'
 		}
 		this.render()
 	}
 
 	selectAll () {
-		this.notSelected = []
-		this.selected = this.data
+		this.items.left = []
+		this.items.right = this.data
 		this.render()
 	}
 
 	deselectAll () {
-		this.notSelected = this.data
-		this.selected = []
+		this.items.left = this.data
+		this.items.right = []
 		this.render()
 	}
 
 	render () {
-		SIDES.forEach(item => {
-			this.elements.counter[item.side].innerHTML = this[item.data].length
-			this.elements.list[item.side].innerHTML = ''
-			if (!this[item.search]) {
-				this[item.data].forEach(i => {
-					this.elements.list[item.side].appendChild(this.renderListItem(i, item.side))
-				})
-			} else {
-				if (!this[item.search]) {
-					return false
-				}
-				this[item.search].forEach(i => {
-					this.elements.list[item.side].appendChild(this.renderListItem(i, item.side))
-				})
-			}
+		SIDES.forEach(side => {
+			this.elements.counter[side].innerHTML = this.items[side].length
+			this.elements.list[side].innerHTML = ''
+			const listOn = this.searching[side] ? 'shown' : 'items'
+
+			this[listOn][side].forEach(i => {
+				this.elements.list[side].appendChild(this.renderListItem(i, side))
+			})
 		})
 	}
 	renderListItem (item, side) {
@@ -138,40 +109,31 @@ export default class Select {
 		const side = listItem.getAttribute('data-side')
 
 		switch (side) {
-			case 'Left':
-				this.moveLeft(item)
+			case 'left':
+				this.move(item, 'left', 'right')
 				break;
-			case 'Right':
-				this.moveRight(item)
+			case 'right':
+				this.move(item, 'right', 'left')
 				break;
 		}
 		this.render()
 	}
 
-	moveLeft (item) {
-		this.notSelected = this.notSelected.filter(option => item !== option)
-		this.selected.push(item)
-		this.setSearchList(item)
+
+
+	setSearchList () {
+		SIDES.forEach(side => {
+			if (this.searching[side]) {
+				this.shown[side] = this.items[side].filter(item => {
+					return item[this.config.labelField].toLowerCase().indexOf(this.searching[side].toLowerCase()) !== -1
+				})
+			}
+		})
 	}
 
-	setSearchList (item) {
-		if (this.searchingLeft) {
-			this.shownLeft = this.notSelected.filter(item => {
-				return item[this.config.labelField].toLowerCase().indexOf(this.searchingLeft.toLowerCase()) !== -1
-			})
-		}
-		if (this.searchingRight) {
-			this.shownRight = this.selected.filter(item => {
-				return item[this.config.labelField].toLowerCase().indexOf(this.searchingRight.toLowerCase()) !== -1
-			})
-
-		}
+	move (item, from, to) {
+		this.items[to].push(item)
+		this.items[from] = this.items[from].filter(option => item !== option)
+		this.setSearchList()
 	}
-
-	moveRight (item) {
-		this.notSelected.push(item)
-		this.selected = this.selected.filter(option => item !== option)
-		this.setSearchList(item)
-	}
-
 }

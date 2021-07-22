@@ -9,23 +9,28 @@ export default class Elements {
 	setElements () {
 		this.elements = {
 			list : {
-				Left: this.select('.selectit-left .selectit-list'),
-				Right: this.select('.selectit-right .selectit-list') 
+				left: this.select('.selectit-left .selectit-list'),
+				right: this.select('.selectit-right .selectit-list') 
 			},
 			counter: {
-				Left: this.select('.selectit-left .selectit-count'),
-				Right: this.select('.selectit-right .selectit-count'),
+				left: this.select('.selectit-left .selectit-count'),
+				right: this.select('.selectit-right .selectit-count'),
 			},
 			close : {
-				Left: this.select('.selectit-left .close'),
-				Right: this.select('.selectit-right .close'),
+				left: this.select('.selectit-left .close'),
+				right: this.select('.selectit-right .close'),
 			},
 			input : {
-				Left: this.select('.selectit-left .selectit-search input'),
-				Right: this.select('.selectit-right .selectit-search input'),
+				left: this.select('.selectit-left .selectit-search input'),
+				right: this.select('.selectit-right .selectit-search input'),
+			},
+			container: this.select('div'),
+			select: this.select('span.selectit-selectall'),
+			deselect: this.select('span.selectit-deselect'),
+			input: {
+				left: this.select('.selectit-left .selectit-search input'),
+				right: this.select('.selectit-right .selectit-search input'),
 			}
-
-
 		}
 	}
 	

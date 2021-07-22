@@ -1,9 +1,6 @@
 export const LEFT = 1
 export const RIGHT = 3
-export const SIDES = [
-	{side: 'Left', data: 'notSelected', search: 'shownLeft'},
-	{side: 'Right', data: 'selected', search: 'shownRight'},
-]
+export const SIDES = ['left', 'right']
 export const TEMPLATE = `
 <div class="selectit">
 	<div class="selectit-left">
@@ -25,7 +22,7 @@ export const TEMPLATE = `
 	<div class="selectit-right">
 		<div class="selectit-search">
 			<span class="close right">✕</span>
-			<input type="search" class="Search"/>
+			<input type="search" placeholder="Search"/>
 		</div>
 		<div class="selectit-container">
 			<ul class="selectit-list"></ul>
