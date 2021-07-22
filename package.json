@@ -1,0 +1,23 @@
+{
+  "name": "@xuma/side-select",
+  "version": "0.1.0",
+  "description": "A side select plugin",
+  "main": "./src/Select.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakanersu/side-select.git"
+  },
+  "keywords": [
+    "custom",
+    "select"
+  ],
+  "author": "Hakan ERSU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hakanersu/side-select/issues"
+  },
+  "homepage": "https://github.com/hakanersu/side-select#readme"
+}
