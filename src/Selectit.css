@@ -86,6 +86,20 @@ ul.selectit-list {
 
 .selectit-search {
   border-bottom: 1px solid var(--selectit-border);
+  position: relative;
+}
+
+.selectit-search .close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: var(--selectit-border);
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.selectit-search:hover .close {
+  color: var(--selectit-text)
 }
 
 .selectit-search input {

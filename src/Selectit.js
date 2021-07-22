@@ -4,6 +4,8 @@ export default class Select {
 	constructor(element, options) {
 		const defaultOptions = {
 			height: 250,
+			labelField: 'label',
+			valueField: 'value'
 		}
 		this.el = element
 		this.config = Object.assign({}, defaultOptions, options || {})
@@ -35,42 +37,68 @@ export default class Select {
 		const searchRight = this.el.querySelector('.selectit-right .selectit-search input')
 		searchRight.addEventListener('keyup', (e) => this.searchRight(e))
 
+		const closeLeft = this.el.querySelector('.selectit-left .close')
+		closeLeft.addEventListener('click', () => this.cleanLeftSearch())
+
+		const closeRight = this.el.querySelector('.selectit-right .close')
+		closeRight.addEventListener('click', () => this.cleanRightSearch())
+
 		this.elements = (new Elements(this.el)).elements
 		this.render()
 	}
 
+	cleanLeftSearch () {
+		this.searchingLeft = false
+		this.shownLeft = false
+		this.el.querySelector('.selectit-left .selectit-search input').value = ''
+		this.el.querySelector('.selectit-left .close').style.visibility = 'hidden'
+		this.render()
+	}
+
+	cleanRightSearch () {
+		this.searchingRight = false
+		this.shownRight = false
+		this.el.querySelector('.selectit-right .selectit-search input').value = ''
+		this.el.querySelector('.selectit-right .close').style.visibility = 'hidden'
+		this.render()
+	}
+
 	searchLeft (e) {
-		const searchingLeft = e.target.value
-		if (!searchingLeft || searchingLeft === '') {
+		this.searchingLeft = e.target.value
+		if (!this.searchingLeft || this.searchingLeft === '') {
 			this.searchingLeft = false
 			this.shownLeft = false
-		} else {
-			this.searchingLeft = true
+			this.el.querySelector('.selectit-left .close').style.visibility = 'hidden'
 		}
 
 		this.shownLeft = this.notSelected.filter(item => {
-			return item.label.toLowerCase().indexOf(searchingLeft.toLowerCase()) !== -1
+			return item[this.config.labelField].toLowerCase().indexOf(this.searchingLeft.toLowerCase()) !== -1
 		})
-		if (!searchingLeft) {
+
+		if (!this.searchingLeft) {
 			this.shownLeft = false
+		} else {
+			this.el.querySelector('.selectit-left .close').style.visibility = 'visible'
 		}
 		this.render()
 	}
 
 	searchRight (e) {
-		const searchingRight = e.target.value
-		if (!searchingRight || searchingRight === '') {
+		this.searchingRight = e.target.value
+		if (!this.searchingRight || this.searchingRight === '') {
 			this.searchingRight = false
 			this.shownRight = false
-		} else {
-			this.searchingRight = true
+			this.el.querySelector('.selectit-right .close').style.visibility = 'hidden'
 		}
 
 		this.shownRight = this.selected.filter(item => {
-			return item.label.toLowerCase().indexOf(searchingRight.toLowerCase()) !== -1
+			return item[this.config.labelField].toLowerCase().indexOf(this.searchingRight.toLowerCase()) !== -1
 		})
-		if (!searchingRight) {
-			this.shownRight= false
+		if (!this.searchingRight) {
+			this.shownRight = false
+		} else {
+
+			this.el.querySelector('.selectit-right .close').style.visibility = 'visible'
 		}
 		this.render()
 	}
@@ -91,7 +119,6 @@ export default class Select {
 		SIDES.forEach(item => {
 			this.elements.counter[item.side].innerHTML = this[item.data].length
 			this.elements.list[item.side].innerHTML = ''
-console.log('Search part', this[item.search], this.shownLeft)
 			if (!this[item.search]) {
 				this[item.data].forEach(i => {
 					this.elements.list[item.side].appendChild(this.renderListItem(i, item.side))
@@ -110,7 +137,7 @@ console.log('Search part', this[item.search], this.shownLeft)
 		let el = document.createElement("li")
 		el.setAttribute("data-value", item.value)
 		el.setAttribute('data-side', side)
-		el.innerHTML = item.label
+		el.innerHTML = item[this.config.labelField]
 		el.addEventListener("click", this.listItemClicked.bind(this, item));
 		return el
 	}
@@ -133,11 +160,27 @@ console.log('Search part', this[item.search], this.shownLeft)
 	moveLeft (item) {
 		this.notSelected = this.notSelected.filter(option => item !== option)
 		this.selected.push(item)
+		this.setSearchList(item)
+	}
+
+	setSearchList (item) {
+		if (this.searchingLeft) {
+			this.shownLeft = this.notSelected.filter(item => {
+				return item[this.config.labelField].toLowerCase().indexOf(this.searchingLeft.toLowerCase()) !== -1
+			})
+		}
+		if (this.searchingRight) {
+			this.shownRight = this.selected.filter(item => {
+				return item[this.config.labelField].toLowerCase().indexOf(this.searchingRight.toLowerCase()) !== -1
+			})
+
+		}
 	}
 
 	moveRight (item) {
 		this.notSelected.push(item)
 		this.selected = this.selected.filter(option => item !== option)
+		this.setSearchList(item)
 	}
 
 }

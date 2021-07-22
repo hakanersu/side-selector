@@ -8,6 +8,7 @@ export const TEMPLATE = `
 <div class="selectit">
 	<div class="selectit-left">
 		<div class="selectit-search">
+			<span class="close left">✕</span>
 			<input type="search" placeholder="Search"/>
 		</div>
 		<div class="selectit-container">
@@ -23,6 +24,7 @@ export const TEMPLATE = `
 	</div>
 	<div class="selectit-right">
 		<div class="selectit-search">
+			<span class="close right">✕</span>
 			<input type="search" class="Search"/>
 		</div>
 		<div class="selectit-container">
