@@ -1,8 +1,8 @@
 export const LEFT = 1
 export const RIGHT = 3
 export const SIDES = [
-	{side: 'left', data: 'notSelected', search: 'shownLeft'},
-	{side: 'right', data: 'selected', search: 'shownRight'},
+	{side: 'Left', data: 'notSelected', search: 'shownLeft'},
+	{side: 'Right', data: 'selected', search: 'shownRight'},
 ]
 export const TEMPLATE = `
 <div class="selectit">

@@ -9,13 +9,22 @@ export default class Elements {
 	setElements () {
 		this.elements = {
 			list : {
-				left: this.select('.selectit-left .selectit-list'),
-				right: this.select('.selectit-right .selectit-list') 
+				Left: this.select('.selectit-left .selectit-list'),
+				Right: this.select('.selectit-right .selectit-list') 
 			},
 			counter: {
-				left: this.select('.selectit-left .selectit-count'),
-				right: this.select('.selectit-right .selectit-count'),
+				Left: this.select('.selectit-left .selectit-count'),
+				Right: this.select('.selectit-right .selectit-count'),
+			},
+			close : {
+				Left: this.select('.selectit-left .close'),
+				Right: this.select('.selectit-right .close'),
+			},
+			input : {
+				Left: this.select('.selectit-left .selectit-search input'),
+				Right: this.select('.selectit-right .selectit-search input'),
 			}
+
 
 		}
 	}

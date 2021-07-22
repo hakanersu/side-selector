@@ -14,8 +14,8 @@ export default class Select {
 		this.selected = []
 		this.selectedBackup = []
 		this.notSelected = this.data
-		this.leftCount = this.notSelected.length
-		this.rightCount = this.selected.length
+		this.LeftCount = this.notSelected.length
+		this.RightCount = this.selected.length
 		this.create()
 	}
 
@@ -50,16 +50,16 @@ export default class Select {
 	cleanLeftSearch () {
 		this.searchingLeft = false
 		this.shownLeft = false
-		this.el.querySelector('.selectit-left .selectit-search input').value = ''
-		this.el.querySelector('.selectit-left .close').style.visibility = 'hidden'
+		this.elements.input.Left.value = ''
+		this.elements.close.Left.style.visibility = 'hidden'
 		this.render()
 	}
 
 	cleanRightSearch () {
 		this.searchingRight = false
 		this.shownRight = false
-		this.el.querySelector('.selectit-right .selectit-search input').value = ''
-		this.el.querySelector('.selectit-right .close').style.visibility = 'hidden'
+		this.elements.input.Right.value = ''
+		this.elements.close.Right.style.visibility = 'hidden'
 		this.render()
 	}
 
@@ -68,7 +68,7 @@ export default class Select {
 		if (!this.searchingLeft || this.searchingLeft === '') {
 			this.searchingLeft = false
 			this.shownLeft = false
-			this.el.querySelector('.selectit-left .close').style.visibility = 'hidden'
+			this.elements.close.Left.style.visibility = 'hidden'
 		}
 
 		this.shownLeft = this.notSelected.filter(item => {
@@ -78,7 +78,7 @@ export default class Select {
 		if (!this.searchingLeft) {
 			this.shownLeft = false
 		} else {
-			this.el.querySelector('.selectit-left .close').style.visibility = 'visible'
+			this.elements.close.Left.style.visibility = 'visible'
 		}
 		this.render()
 	}
@@ -88,7 +88,7 @@ export default class Select {
 		if (!this.searchingRight || this.searchingRight === '') {
 			this.searchingRight = false
 			this.shownRight = false
-			this.el.querySelector('.selectit-right .close').style.visibility = 'hidden'
+			this.elements.close.Right.style.visibility = 'hidden'
 		}
 
 		this.shownRight = this.selected.filter(item => {
@@ -97,8 +97,7 @@ export default class Select {
 		if (!this.searchingRight) {
 			this.shownRight = false
 		} else {
-
-			this.el.querySelector('.selectit-right .close').style.visibility = 'visible'
+			this.elements.close.Right.style.visibility = 'visible'
 		}
 		this.render()
 	}
@@ -147,10 +146,10 @@ export default class Select {
 		const side = listItem.getAttribute('data-side')
 
 		switch (side) {
-			case 'left':
+			case 'Left':
 				this.moveLeft(item)
 				break;
-			case 'right':
+			case 'Right':
 				this.moveRight(item)
 				break;
 		}
