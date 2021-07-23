@@ -1,5 +1,6 @@
 import { TEMPLATE, SIDES } from './Constants.js'
 import Elements from './Elements.js'
+
 export default class Select {
 	constructor(element, options) {
 		const defaultOptions = {
@@ -34,17 +35,20 @@ export default class Select {
 	create () {
 		this.el.innerHTML = TEMPLATE
 		this.elements = (new Elements(this.el)).elements
-
 		this.elements.container.style.height = `${this.config.height}px`
+		this.registerEvents()
+		this.render()
+	}
+
+	registerEvents () {
 		this.elements.select.addEventListener("click", () => this.selectAll());
 		this.elements.deselect.addEventListener("click", () => this.deselectAll());
 		this.elements.input.left.addEventListener('keyup', (e) => this.searchItems(e, 'left'))
 		this.elements.input.right.addEventListener('keyup', (e) => this.searchItems(e, 'right'))
 		this.elements.close.left.addEventListener('click', () => this.clearSearch('left'))
 		this.elements.close.right.addEventListener('click', () => this.clearSearch('right'))
-
-		this.render()
 	}
+
 	clearSearch (side) {
 		this.searching[side] = false
 		this.shown[side] = []
@@ -94,7 +98,14 @@ export default class Select {
 				this.elements.list[side].appendChild(this.renderListItem(i, side))
 			})
 		})
+
+		new CustomEvent('selected', { items: this.items.right})
 	}
+
+	get selected () {
+		return this.items.right
+	}
+
 	renderListItem (item, side) {
 		let el = document.createElement("li")
 		el.setAttribute("data-value", item.value)
