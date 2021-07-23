@@ -1,8 +1,10 @@
 import { TEMPLATE, SIDES } from './Constants.js'
 import Elements from './Elements.js'
-
-export default class Select {
+import Event from './Event.js'
+export default class Select extends Event {
 	constructor(element, options) {
+		super()
+		this.on('selected', () => { })
 		const defaultOptions = {
 			height: 250,
 			labelField: 'label',
@@ -99,7 +101,7 @@ export default class Select {
 			})
 		})
 
-		new CustomEvent('selected', { items: this.items.right})
+		this.emit('selected', this.items.right)
 	}
 
 	get selected () {

@@ -261,7 +261,9 @@
           { name: 'Zimbabwe', code: 'ZW' }
         ]
       };
-      new SelectIt(document.getElementById("selector"), options);
+      const selectIt = new SelectIt(document.getElementById("selector"), options).on('selected', (items) => {
+        console.log('Items', items)
+      });
     });
   </script>
   <link rel="stylesheet" href="../src/Selectit.css">
