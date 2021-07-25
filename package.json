@@ -1,7 +1,7 @@
 {
   "name": "@xuma/side-select",
   "version": "0.1.0",
-  "description": "A side select plugin",
+  "description": "A side select vanilla javascript plugin",
   "main": "./src/Select.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

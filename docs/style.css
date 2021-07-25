@@ -1,0 +1,10 @@
+.container {
+	width: 800px;
+	margin: 0 auto;
+}
+pre {
+	background: #222;
+	border-radius: 8px;
+	padding: 10px;
+	color: #ccc;
+}

@@ -15,6 +15,7 @@
       var options = {
         searchable: true,
         labelField: 'name',
+        valueField: 'code',
         data: [
           { name: 'Afghanistan', code: 'AF' },
           { name: 'Åland Islands', code: 'AX' },
@@ -261,16 +262,108 @@
           { name: 'Zimbabwe', code: 'ZW' }
         ]
       };
-      const selectIt = new SelectIt(document.getElementById("selector"), options).on('selected', (items) => {
+      new SelectIt(document.getElementById("selector"), options).on('selected', (items) => {
         console.log('Items', items)
       });
+      new SelectIt(document.getElementById("preselect"), {
+        searchable: true,
+        data: [
+          { label: 'JavaScript (React.js and Node.js)', value: 1 },
+          { label: 'Python', value: 2 },
+          { label: 'HTML', value: 3 },
+          { label: 'CSS', value: 4 },
+          { label: 'C++', value: 5 },
+          { label: 'TypeScript', value: 6 },
+          { label: 'Rust', value: 7 },
+          { label: 'Scheme', value: 8 },
+          { label: 'Java ', value: 8 },
+          { label: 'Kotlin', value: 10 },
+          { label: 'C#', value: 11 },
+          { label: 'Perl', value: 12 },
+          { label: 'PHP', value: 13 },
+          { label: 'Scala ', value: 14 },
+          { label: 'Swift', value: 15 },
+          { label: 'MATLAB', value: 16 },
+          { label: 'SQL', value: 17 },
+          { label: 'R Programming Language', value: 18 },
+          { label: 'Golang (Go)', value: 19 },
+          { label: 'Ruby', value: 20 },
+        ],
+        selected: [13, 17, 19, 20],
+        name: 'preselected'
+      })
     });
   </script>
   <link rel="stylesheet" href="../src/Selectit.css">
+  <link rel="stylesheet" href="/docs/style.css">
 </head>
 
 <body>
-  <div id="selector" style="width: 800px"></div>
+  <div class="container">
+    <h1>Selectit</h1>
+    <div id="selector" style="width: 800px;"></div>
+<pre><code>var options = {
+    searchable: true,
+    labelField: 'name',
+    valueField: 'code',
+    data: [
+      { name: 'Afghanistan', code: 'AF' },
+      { name: 'Åland Islands', code: 'AX' },
+      { name: 'Albania', code: 'AL' },
+      { name: 'Algeria', code: 'DZ' },
+      { name: 'American Samoa', code: 'AS' },
+      { name: 'AndorrA', code: 'AD' },
+      { name: 'Angola', code: 'AO' },
+      { name: 'Zambia', code: 'ZM' },
+      { name: 'Zimbabwe', code: 'ZW' }
+    ]
+  };
+  new SelectIt(document.getElementById("selector"), options).on('selected', (items) => {
+    console.log('Items', items)
+  });</code></pre>
+    <h1>Preselected options</h1>
+    <div id="preselect" style="width: 800px;margin-top: 15px;"></div>
+<pre><code>new SelectIt(document.getElementById("preselect"), {
+    searchable: true,
+    data: [
+      { label: 'JavaScript (React.js and Node.js)', value: 1 },
+      { label: 'Python', value: 2 },
+      { label: 'HTML', value: 3 },
+      { label: 'CSS', value: 4 },
+      { label: 'C++', value: 5 },
+      { label: 'TypeScript', value: 6 },
+      { label: 'Rust', value: 7 },
+      { label: 'Scheme', value: 8 },
+      { label: 'Java ', value: 8 },
+      { label: 'Kotlin', value: 10 },
+      { label: 'C#', value: 11 },
+      { label: 'Perl', value: 12 },
+      { label: 'PHP', value: 13 },
+      { label: 'Scala ', value: 14 },
+      { label: 'Swift', value: 15 },
+      { label: 'MATLAB', value: 16 },
+      { label: 'SQL', value: 17 },
+      { label: 'R Programming Language', value: 18 },
+      { label: 'Golang (Go)', value: 19 },
+      { label: 'Ruby', value: 20 },
+    ],
+    selected: [13, 17, 19, 20],
+    name: 'preselected'
+  })</code></pre>
+  <h1>Config options</h1>
+<pre><code>{
+  height: 250,
+  labelField: 'label',
+  valueField: 'value',
+  selected: undefined,
+  name: 'selectit-input'
+}</code></pre>
+
+<h3><em>.on()</em> method:</h3>
+<p>When an option selected all selected options will be passed this method.</p>
+<h3>Hidden input</h3>
+<p>All selected values will be passed to a hidden input with name <em>selectit-input</em>. You can change this inputs name with <em>name</em> config option</p>
+  </div>
 </body>
 
 </html>

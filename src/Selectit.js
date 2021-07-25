@@ -8,7 +8,9 @@ export default class Select extends Event {
 		const defaultOptions = {
 			height: 250,
 			labelField: 'label',
-			valueField: 'value'
+			valueField: 'value',
+			selected: undefined,
+			name: 'selectit-input'
 		}
 
 		this.el = element
@@ -31,6 +33,10 @@ export default class Select extends Event {
 
 		this.items.left = this.data
 
+		if (this.config.selected) {
+			this.preSelect()
+		}
+
 		this.create()
 	}
 
@@ -38,6 +44,7 @@ export default class Select extends Event {
 		this.el.innerHTML = TEMPLATE
 		this.elements = (new Elements(this.el)).elements
 		this.elements.container.style.height = `${this.config.height}px`
+		this.elements.hidden.setAttribute('name', this.config.name)
 		this.registerEvents()
 		this.render()
 	}
@@ -102,6 +109,7 @@ export default class Select extends Event {
 		})
 
 		this.emit('selected', this.items.right)
+		this.elements.hidden.value = this.items.right.map(item => item[this.config.valueField])
 	}
 
 	get selected () {
@@ -148,5 +156,14 @@ export default class Select extends Event {
 		this.items[to].push(item)
 		this.items[from] = this.items[from].filter(option => item !== option)
 		this.setSearchList()
+	}
+
+	preSelect () {
+		this.items.right = this.data.filter(item => {
+			return this.config.selected.indexOf(item[this.config.valueField]) !== -1
+		})
+		this.items.left = this.data.filter(item => {
+			return this.config.selected.indexOf(item[this.config.valueField]) === -1
+		})
 	}
 }

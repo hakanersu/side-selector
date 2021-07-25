@@ -32,5 +32,6 @@ export const TEMPLATE = `
 			</div>
 		</div>
 	</div>
+	<input type="hidden" class="selectit-input" name="selectit-input" />
 </div>
 `
