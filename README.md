@@ -9,3 +9,7 @@
 npm i @xuma/side-select
 ```
 
+### Usage
+
+You can check here to see examples; https://hakanersu.github.io/side-selector/
+
