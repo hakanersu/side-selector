@@ -1,0 +1,113 @@
+:root {
+  --selectit-gray: rgb(235, 235, 235);
+  --selectit-blue: rgb(59, 130, 246);
+  --selectit-text: #374151;
+  --selectit-border: #ccc;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+}
+
+.selectit {
+  display: flex;
+}
+
+/* Left and right counters */
+.selectit-left,
+.selectit-right {
+  flex: 1 1 0%;
+  border: 1px solid var(--selectit-border);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.selectit-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  overflow: hidden;
+}
+
+/* Left and right list containers */
+ul.selectit-list {
+  list-style: none;
+  padding: 0 5px;
+  margin: 0;
+  flex: 1 1 0%;
+  padding-top: 5px;
+  overflow-y: auto;
+}
+
+.selectit-list li {
+  cursor: pointer;
+  user-select: none;
+  color: var(--selectit-text);
+  background-color: var(--selectit-gray);
+  padding: 3px 5px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+.selectit-list li:hover {
+  background-color: var(--selectit-blue);
+  color: #fff;
+}
+
+/* Center part */
+.selectit-center {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* Counters */
+.selectit-counter {
+  background: var(--selectit-blue);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #fff;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.selectit-counter span {
+  cursor: pointer;
+}
+
+.selectit-search {
+  border-bottom: 1px solid var(--selectit-border);
+  position: relative;
+}
+
+.selectit-search .close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  color: var(--selectit-border);
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.selectit-search:hover .close {
+  color: var(--selectit-text)
+}
+
+.selectit-search input {
+  border: 0;
+  width: 100%;
+  padding: 10px 10px;
+}
+
+.selectit-search input:focus-visible {
+  outline: 1px solid var(--selectit-blue);
+}
