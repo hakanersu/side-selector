@@ -31,7 +31,8 @@ export default class Elements {
 				left: this.select('.selectit-left .selectit-search input'),
 				right: this.select('.selectit-right .selectit-search input'),
 			},
-			hidden: this.select('.selectit-input')		}
+			hidden: this.select('.selectit-input')		
+		}
 	}
 	
 	select(string) {

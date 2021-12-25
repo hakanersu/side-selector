@@ -10,7 +10,12 @@ export default class Select extends Event {
 			labelField: 'label',
 			valueField: 'value',
 			selected: undefined,
-			name: 'selectit-input'
+			name: 'selectit-input',
+			translation: {
+				selectAll: 'Select all',
+				deselectAll: 'Deselect all',
+				search: 'Search'
+			}
 		}
 
 		this.el = element
@@ -45,6 +50,10 @@ export default class Select extends Event {
 		this.elements = (new Elements(this.el)).elements
 		this.elements.container.style.height = `${this.config.height}px`
 		this.elements.hidden.setAttribute('name', this.config.name)
+		this.elements.select.innerHTML = this.config.translation.selectAll
+		this.elements.deselect.innerHTML = this.config.translation.deselectAll
+		this.elements.input.left.setAttribute('placeholder', this.config.translation.search)
+		this.elements.input.right.setAttribute('placeholder', this.config.translation.search)
 		this.registerEvents()
 		this.render()
 	}
