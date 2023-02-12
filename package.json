@@ -1,6 +1,6 @@
 {
   "name": "@xuma/side-select",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A side select vanilla javascript plugin",
   "main": "./src/Selectit.js",
   "scripts": {
