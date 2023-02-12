@@ -1,6 +1,7 @@
 import { TEMPLATE, SIDES } from './Constants.js'
 import Elements from './Elements.js'
 import Event from './Event.js'
+
 export default class Select extends Event {
 	constructor(element, options) {
 		super()
